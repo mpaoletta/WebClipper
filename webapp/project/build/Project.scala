@@ -42,7 +42,8 @@ class Project(info: ProjectInfo) extends DefaultWebProject(info) with AkkaProjec
 	
 	val guava = "com.google.guava" % "guava" % "r09"
 	
-	val twitter4j = "org.twitter4j" % "twitter4j-core" % "2.2.2" withSources()
+	val twitter4jCore = "org.twitter4j" % "twitter4j-core" % "2.2.2" withSources()
+	val twitter4jStream = "org.twitter4j" % "twitter4j-stream" % "2.2.2" withSources()
 	
 	val sjson = "net.debasishg" % "sjson_2.8.0" % "0.8"
 	val scalaredis = "net.debasishg" % "redisclient_2.9.0" % "2.3.1" withSources()

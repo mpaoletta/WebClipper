@@ -11,6 +11,8 @@ import JsonSerialization._
 
 class TwitterServiceBuilder extends ServiceBuilder {
   
+  val commaSplitter = com.google.common.base.Splitter.on(',')
+  
 /* 
   point: String
     , tweets: Long, tweetsPos: Long, tweetsNeutral: Long, tweetsNeg: Long
@@ -25,12 +27,29 @@ class TwitterServiceBuilder extends ServiceBuilder {
     
     path("") {
       get { _.complete("Twitter Service!") }
-    }
-    
+    } ~
     path("metrics") {
       get { _.complete(tojson(MockTwitterMetrics.metrics).toString) }
+    } ~
+    path("track") {
+        (get & parameters('guide, 'keywords)) { 
+          (guia, keywords) => {        	  
+        	  _.complete("Siguiendo guia " + guia + "(" + keywords + ")" ) }
+          }
+    } ~
+    path("discard") { 
+      (get & parameter('guide)) { 
+        (guia) => _.complete("Descartando " + guia) 
+        }      
+    } ~
+    path("data") { 
+      (get & parameters('guides, 'period, 'since)) { 
+        (guides, period, since) => {
+          val guideList = guides.split(',').toList
+          _.complete(tojson(MockTwitterMetrics.metricsFor(guideList)).toString)     
+        }
+      }
     }
-    
   } 
   
 }
@@ -39,13 +58,17 @@ object MockTwitterMetrics {
   
   val random = new scala.util.Random
   
-  def metrics: List[Series] = {
-    val series: List[String] = List("Coca Cola", "Pepsi")
+  def metricsFor(series: List[String]): List[Series] = {
     val traversable: Traversable[Series] = series.map(s => genSerie(s))
     traversable.toList
   }
   
-/*
+  def metrics(): List[Series] = {
+    val series: List[String] = List("Coca Cola", "Pepsi")
+    metricsFor(series)
+  }
+
+  /*
 case class Metric(point: String
     , tweets: Long, tweetsPos: Long, tweetsNeutral: Long, tweetsNeg: Long
     , tweetsP: Long, tweetsPPos: Long, tweetsPNeutral: Long, tweetsPNeg: Long)  
@@ -63,7 +86,7 @@ case class Metric(point: String
 	      val tweetsPNeutral = randomHasta(tweetsP-tweetsPPos)
 	      val tweetsPNeg = tweetsP-(tweetsPPos+tweetsPNeutral)
 	      
-	      lista += new Metric("2011/05/" + {if(i<10) "0" + i else i}, tweets, tweetsPos, tweetsNeutral, tweetsNeg
+	      lista += new Metric("05/" + {if(i<10) "0" + i else i}, tweets, tweetsPos, tweetsNeutral, tweetsNeg
 	          , tweetsP, tweetsPPos, tweetsPNeutral, tweetsPNeg)
 	    }
 	    new Series(nombre, lista.toList)

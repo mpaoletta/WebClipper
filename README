@@ -1,0 +1,19 @@
+Carpeta webapp: clipping twitter
+
+Bajar sbt (http://code.google.com/p/simple-build-tool/downloads/list)
+
+mkdir webclipper
+cd webclipper
+git clone git@github.com:mpaoletta/WebClipper.git
+cd webapp
+sbt
+> update
+> jetty-run
+> ~ prepare-webapp
+
+http://localhost:8080/metrics
+
+Si, una cagada que haya hecho el proyecto en la carpeta webapp, luego si crece lo renombro.
+
+
+

@@ -99,18 +99,20 @@ case class Metric(point: String
 	    var lista = new ListBuffer[Metric]
 		if("day" == period) {
 			val daze: Int = ((till.getTime - since.getTime) / (24 * 60 * 60 * 1000)).intValue
+			cal.setTime(till)
 			for(i <- 1 to daze) {
-				cal.add(Calendar.DAY_OF_MONTH, -1)
 				val point = formatDay format cal.getTime
 				lista+= genMetrics(point)
+				cal.add(Calendar.DAY_OF_MONTH, -1)
 			}
 		}
 		else {
 			val hourz: Int = ((till.getTime - since.getTime) / (60 * 60 * 1000)).intValue
+			cal.setTime(till)
 			for(i <- 1 to hourz) {
-				cal.add(Calendar.HOUR, -1)
-				val point = formatDay format cal.getTime
+				val point = formatHour format cal.getTime
 				lista+=genMetrics(point)
+				cal.add(Calendar.HOUR, -1)
 			}		  
 		}
 

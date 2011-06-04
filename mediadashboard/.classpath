@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<classpath>
+<classpathentry kind="src" path="src/test/scala" output="target/scala_2.9.0/test-classes" including="**/*.scala" />
+<classpathentry kind="src" path="src/main/scala" including="**/*.scala" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/akka-http-1.0.jar" sourcepath="./lib_managed/scala_2.9.0/compile/akka-http-1.0-sources.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/casbah-commons_2.9.0-1-2.1.5.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/stax-api-1.0-2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/casbah-query_2.9.0-1-2.1.5.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/akka-actor-1.0.jar" sourcepath="./lib_managed/scala_2.9.0/compile/akka-actor-1.0-sources.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jsr311-api-1.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/multiverse-alpha-0.6.2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/sbinary-2.8.0-0.3.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/twitter4j-stream-2.2.2.jar" sourcepath="./lib_managed/scala_2.9.0/compile/twitter4j-stream-2.2.2-sources.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/jetty-continuation-8.0.0.M2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/servlet-api-3.0.20100224.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jetty-server-7.1.6.v20100715.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/akka-camel-1.0.jar" sourcepath="./lib_managed/scala_2.9.0/compile/akka-camel-1.0-sources.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/uuid-3.2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/sjson_2.8.0-0.8.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/jetty-xml-8.0.0.M2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/configgy-2.0.2-nologgy.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jetty-util-7.1.6.v20100715.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/commons-pool-1.5.5.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/time_2.8.0-0.2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/jetty-webapp-8.0.0.M2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/junit-4.8.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jersey-json-1.3.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jersey-scala-1.3.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/dispatch-json_2.8.0-0.7.4.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/httpclient-4.0.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jsr250-api-1.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/camel-core-2.7.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/protobuf-java-2.3.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jetty-xml-7.1.6.v20100715.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/casbah-core_2.9.0-1-2.1.5.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/jetty-server-8.0.0.M2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/jetty-io-8.0.0.M2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/morphia-0.91.jar" sourcepath="./lib_managed/scala_2.9.0/compile/morphia-0.91-sources.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/stax-api-1.0.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/commons-logging-1.1.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jettison-1.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/slf4j-api-1.6.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/hawtdispatch-1.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/scalap-2.9.0-1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/scalate-core-1.5.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jaxb-api-2.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/dispatch-http_2.8.0-0.7.4.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/jetty-security-8.0.0.M2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/salat-core_2.9.0-1-0.0.8-SNAPSHOT.jar" sourcepath="./lib_managed/scala_2.9.0/compile/salat-core_2.9.0-1-0.0.8-SNAPSHOT-sources.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/jetty-servlet-8.0.0.M2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/logback-core-0.9.24.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/guava-r09.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jackson-core-asl-1.4.3.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jedis-1.3.0.jar" sourcepath="./lib_managed/scala_2.9.0/compile/jedis-1.3.0-sources.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/hawtdispatch-scala-1.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/activation-1.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/httpcore-4.0.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/netty-3.2.3.Final.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/logback-classic-0.9.24.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/quartz-1.8.4.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/scalatra-scalate_2.9.0-2.0.0-SNAPSHOT.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/aspectwerkz-2.2.3.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jetty-security-7.1.6.v20100715.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jaxb-impl-2.1.12.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/joda-time-1.6.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/asm-3.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jackson-mapper-asl-1.4.3.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/commons-management-1.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/akka-remote-1.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jetty-http-7.1.6.v20100715.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/objenesis-1.2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/twitter4j-core-2.2.2.jar" sourcepath="./lib_managed/scala_2.9.0/compile/twitter4j-core-2.2.2-sources.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/commons-io-1.4.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/jetty-util-8.0.0.M2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jetty-servlet-7.1.6.v20100715.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/scalaj-collection_2.8.0-1.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/h2-lzf-1.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/guice-all-2.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/camel-quartz-2.7.1.jar" sourcepath="./lib_managed/scala_2.9.0/compile/camel-quartz-2.7.1-sources.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jsr166x-1.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/akka-stm-1.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/jetty-http-8.0.0.M2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/redisclient_2.8.1-2.3.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/commons-codec-1.4.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jetty-io-7.1.6.v20100715.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/scalatra_2.9.0-2.0.0-SNAPSHOT.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jta-1.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/commons-collections-3.2.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/sjson-0.8-2.8.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/aopalliance-1.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jersey-core-1.3.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jersey-server-1.3.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jetty-continuation-7.1.6.v20100715.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/dispatch-futures_2.8.0-0.7.4.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/akka-typed-actor-1.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/mongo-java-driver-2.5.3.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/servlet-api-2.5.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/scalate-util-1.5.0.jar" />
+<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER" />
+<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" />
+<classpathentry kind="output" path="target/scala_2.9.0/classes" />
+</classpath>

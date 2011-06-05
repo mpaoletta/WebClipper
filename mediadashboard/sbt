@@ -1,0 +1,6 @@
+PATH=/Applications/typesafe-stack/bin:$PATH
+
+JAVA_OPTS="-verbose:gc -XX:+PrintGCDetails -Xloggc:gc.log -Xmx1024m -XX:MaxPermSize=256m -Xss2M -noverify"
+
+exec java -jar `dirname $0`/sbt-launch-0.7.7.jar "$@"
+

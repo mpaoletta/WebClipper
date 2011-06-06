@@ -57,6 +57,16 @@ object TwitterStorageAndMetricsDAO {
       false
   }
 
+  def getGuidesTrackInfo: List[Track] = {
+    var lista = new scala.collection.mutable.ListBuffer[Track]()
+    for (guide <- redis.smembers(GUIDES_MEMBERS).get) {  
+      val keywords: Array[String] = redis.smembers(twitterKeywordSetFor(guide.get)).get.map(_.get).toArray
+      val users: Array[Long] = redis.smembers(twitterUserSetFor(guide.get)).get.map(_.get.toLong).toArray
+      lista += new Track(guide.get, keywords, users)
+    }
+    lista.toList
+  }
+
   def getGuidesByKeyword: HashMap[String, HashSet[String]] = {
 
     if (keywordsxGuia == null) {

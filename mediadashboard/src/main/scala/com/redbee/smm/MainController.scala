@@ -98,7 +98,10 @@ class MainController extends ScalatraFilter with ScalateSupport {
   get("/guides") {
     contentType = "application/json"
     twitterService !! "guides" match {
-      case Some(s:Iterable[String]) => """{"guides":[""" + s.asInstanceOf[Iterable[String]].reduceLeft(_ + ", " + _) + "]}"
+      case Some(s:Iterable[String]) =>{
+        //"""{"guides":[""" + s.asInstanceOf[Iterable[String]].reduceLeft(_ + ", " + _) + "]}"
+        tojson(TwitterStorageAndMetricsDAO.getGuidesTrackInfo)
+      }
       case None => renderStatus("ERROR", "")
     }
     

@@ -51,7 +51,7 @@ class TwitterServiceActor extends Actor {
 
     case Restart => restart
 
-    case "guides" => self.reply(twitterDAO.getGuidesByKeyword.values ++ twitterDAO.getGuidesByUser.values)
+    case "guides" => self.reply(twitterDAO.getGuidesByKeyword.values ++ twitterDAO.getGuidesByUser.values)    
     
   }
   

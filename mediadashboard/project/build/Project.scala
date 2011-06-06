@@ -42,6 +42,8 @@ class Project(info: ProjectInfo) extends DefaultWebProject(info) with AkkaProjec
   val akkaCamel = akkaModule("camel") withSources ()
   val camelQuartz = "org.apache.camel" % "camel-quartz" % "2.7.1" withSources ()
 
+  lazy val logback = "ch.qos.logback" % "logback-classic" % "0.9.28" % "runtime"
+
   val JETTY_VERSION = "8.0.0.M2"
   //val specs       = "org.scala-tools.testing" %% "specs" % "1.6.7" % "test"
   val jettyServer = "org.eclipse.jetty" % "jetty-server" % JETTY_VERSION % "test"

@@ -19,6 +19,7 @@ import com.redbee.smm.twitter.Metric
 
 object TwitterStorageAndMetricsDAO {
 
+  val MAX_KEYWORDS = 200
   val redis: RedisClient = new RedisClient("localhost", 6379)
   val jedis = new Jedis("localhost");
   val GUIDES = "guides:"
@@ -29,26 +30,32 @@ object TwitterStorageAndMetricsDAO {
 
   var keywordsxGuia: HashMap[String, HashSet[String]] = null
 
-  def addTracked(trackInfo: Track): Unit = {
+  def addTracked(trackInfo: Track): Boolean = {
 
-    redis.pipeline { p =>
-      p.sadd(GUIDES_MEMBERS, trackInfo.guide)
-      val twitterKeywordSet = twitterKeywordSetFor(trackInfo.guide)
-      for (keyword <- trackInfo.twitterKeywords) {
-        p.sadd(twitterKeywordSet, keyword)
+    
+    if ((getTrackInfo.keySet.size + trackInfo.twitterKeywords.size) <= MAX_KEYWORDS) {
+      redis.pipeline { p =>
+        p.sadd(GUIDES_MEMBERS, trackInfo.guide)
+        val twitterKeywordSet = twitterKeywordSetFor(trackInfo.guide)
+        for (keyword <- trackInfo.twitterKeywords) {
+          p.sadd(twitterKeywordSet, keyword)
+          keywordsxGuia.getOrElseUpdate(keyword, new HashSet[String]) += trackInfo.guide
+        }
       }
+      true
     }
-
+    else 
+      false
   }
 
   def getTrackInfo: HashMap[String, HashSet[String]] = {
 
     if (keywordsxGuia == null) {
-      var keywords = new scala.collection.mutable.HashMap[String, scala.collection.mutable.HashSet[String]]
+      var keywords = new HashMap[String, HashSet[String]]
 
       for (guide <- redis.smembers(GUIDES_MEMBERS).get) {
         for (keyword <- redis.smembers(twitterKeywordSetFor(guide.get)).get) {
-          keywords.getOrElseUpdate(keyword.get, new scala.collection.mutable.HashSet[String]) += guide.get
+          keywords.getOrElseUpdate(keyword.get, new HashSet[String]) += guide.get
         }
       }
 
@@ -157,7 +164,7 @@ object TwitterStorageAndMetricsDAO {
       val smap = mapa.asScala
       val nhash = smap.mapValues(_.toLong)
       new Metric(point, nhash.getOrElse("tweets", 0), nhash.getOrElse("tweetsPos", 0), nhash.getOrElse("tweetsNeutral", 0), nhash.getOrElse("tweetsNeg", 0), nhash.getOrElse("tweetsP", 0), nhash.getOrElse("tweetsPPos", 0), nhash.getOrElse("tweetsPNeutral", 0), nhash.getOrElse("tweetsPNeg", 0))
-      
+
     }
   }
 

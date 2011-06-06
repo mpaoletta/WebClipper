@@ -4,6 +4,8 @@ import java.util.Date
 import java.util.Calendar
 import java.text.SimpleDateFormat
 import scala.collection.mutable.ListBuffer
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // Aggregation
 case class Yearly() 
@@ -22,6 +24,9 @@ case class Metric(point: String
     
 trait MetricsQuery {
 
+    val logger = LoggerFactory.getLogger(getClass);
+  
+  
   val sdf = new SimpleDateFormat("yyyyMMdd")
   val sdtf = new SimpleDateFormat("yyyyMMddHHmm")
   

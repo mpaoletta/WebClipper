@@ -17,6 +17,7 @@
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/akka-camel-1.0.jar" sourcepath="./lib_managed/scala_2.9.0/compile/akka-camel-1.0-sources.jar" />
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/uuid-3.2.jar" />
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/sjson_2.8.0-0.8.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/runtime/slf4j-api-1.6.1.jar" />
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/jetty-xml-8.0.0.M2.jar" />
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/configgy-2.0.2-nologgy.jar" />
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jetty-util-7.1.6.v20100715.jar" />
@@ -37,6 +38,7 @@
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/jetty-io-8.0.0.M2.jar" />
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/morphia-0.91.jar" sourcepath="./lib_managed/scala_2.9.0/compile/morphia-0.91-sources.jar" />
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/stax-api-1.0.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/runtime/logback-core-0.9.28.jar" />
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/commons-logging-1.1.1.jar" />
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jettison-1.1.jar" />
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/slf4j-api-1.6.1.jar" />
@@ -58,6 +60,7 @@
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/netty-3.2.3.Final.jar" />
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/logback-classic-0.9.24.jar" />
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/quartz-1.8.4.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/runtime/logback-classic-0.9.28.jar" />
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/scalatra-scalate_2.9.0-2.0.0-SNAPSHOT.jar" />
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/aspectwerkz-2.2.3.jar" />
 <classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/jetty-security-7.1.6.v20100715.jar" />

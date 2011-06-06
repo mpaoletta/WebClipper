@@ -1,0 +1,137 @@
+[INFO] [2011-06-05 22:46:05,828] [main] a.c.Config$: Config [akka.conf] loaded from the application classpath.
+[DEBUG] [2011-06-05 22:46:06,479] [main] a.d.Dispatchers$globalExecutorBasedEventDrivenDispatcher$: Starting up Dispatchers$globalExecutorBasedEventDrivenDispatcher$[akka:event-driven:dispatcher:global]
+	with throughput [5]
+[INFO] [2011-06-05 22:46:06,736] [main] a.c.CamelContextManager$: Camel context initialized
+[INFO] [2011-06-05 22:46:06,738] [main] o.a.c.i.DefaultCamelContext: Apache Camel 2.7.1 (CamelContext: camel-1) is starting
+[INFO] [2011-06-05 22:46:06,739] [main] o.a.c.i.DefaultCamelContext: StreamCaching is enabled on CamelContext: camel-1
+[INFO] [2011-06-05 22:46:06,752] [main] o.a.c.i.DefaultCamelContext: JMX enabled. Using ManagedManagementStrategy.
+[WARN] [2011-06-05 22:46:06,766] [main] o.a.c.i.DefaultCamelContext: Cannot find needed classes for JMX lifecycle strategy. Needed class is in spring-context.jar using Spring 2.5 or newer (spring-jmx.jar using Spring 2.0.x). NoClassDefFoundError: org/springframework/jmx/export/metadata/JmxAttributeSource
+[WARN] [2011-06-05 22:46:06,766] [main] o.a.c.i.DefaultCamelContext: Cannot use JMX. Fallback to using DefaultManagementStrategy (non JMX).
+[INFO] [2011-06-05 22:46:07,204] [main] o.a.c.i.c.AnnotationTypeConverterLoader: Found 3 packages with 13 @Converter classes to load
+[INFO] [2011-06-05 22:46:07,258] [main] o.a.c.i.c.DefaultTypeConverter: Loaded 148 type converters in 0.479 seconds
+[INFO] [2011-06-05 22:46:07,259] [main] o.a.c.i.DefaultCamelContext: Total 0 routes, of which 0 is started.
+[INFO] [2011-06-05 22:46:07,259] [main] o.a.c.i.DefaultCamelContext: Apache Camel 2.7.1 (CamelContext: camel-1) started in 0.522 seconds
+[INFO] [2011-06-05 22:46:07,260] [main] a.c.CamelContextManager$: Camel context started
+[INFO] [2011-06-05 22:46:07,262] [main] a.d.LazyExecutorServiceWrapper: Lazily initializing ExecutorService for 
+[DEBUG] [2011-06-05 22:46:07,266] [akka:event-driven:dispatcher:global-1] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-1
+[DEBUG] [2011-06-05 22:46:07,403] [akka:event-driven:dispatcher:global-2] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-2
+[INFO] [2011-06-05 22:46:07,409] [main] c.r.s.twitter: TwitterServiceActor initializing
+[DEBUG] [2011-06-05 22:46:07,481] [akka:event-driven:dispatcher:global-3] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-3
+[DEBUG] [2011-06-05 22:46:07,490] [akka:event-driven:dispatcher:global-4] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-4
+[DEBUG] [2011-06-05 22:46:07,494] [akka:event-driven:dispatcher:global-5] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-5
+[DEBUG] [2011-06-05 22:46:07,796] [akka:event-driven:dispatcher:global-6] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-6
+[INFO] [2011-06-05 22:46:07,979] [akka:event-driven:dispatcher:global-5] o.q.s.SimpleThreadPool: Job execution threads will use class loader of thread: akka:event-driven:dispatcher:global-5
+[INFO] [2011-06-05 22:46:08,081] [akka:event-driven:dispatcher:global-5] o.q.c.SchedulerSignalerImpl: Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+[INFO] [2011-06-05 22:46:08,081] [akka:event-driven:dispatcher:global-5] o.q.c.QuartzScheduler: Quartz Scheduler v.1.8.4 created.
+[INFO] [2011-06-05 22:46:08,084] [akka:event-driven:dispatcher:global-5] o.q.s.RAMJobStore: RAMJobStore initialized.
+[INFO] [2011-06-05 22:46:08,101] [akka:event-driven:dispatcher:global-5] o.q.c.QuartzScheduler: Scheduler meta-data: Quartz Scheduler (v1.8.4) 'DefaultQuartzScheduler-camel-1' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+[INFO] [2011-06-05 22:46:08,102] [akka:event-driven:dispatcher:global-5] o.q.i.StdSchedulerFactory: Quartz scheduler 'DefaultQuartzScheduler-camel-1' initialized from an externally provided properties instance.
+[INFO] [2011-06-05 22:46:08,102] [akka:event-driven:dispatcher:global-5] o.q.i.StdSchedulerFactory: Quartz scheduler version: 1.8.4
+[INFO] [2011-06-05 22:46:08,103] [akka:event-driven:dispatcher:global-5] o.a.c.c.q.QuartzComponent: Starting Quartz scheduler: DefaultQuartzScheduler-camel-1
+[INFO] [2011-06-05 22:46:08,104] [akka:event-driven:dispatcher:global-5] o.q.c.QuartzScheduler: Scheduler DefaultQuartzScheduler-camel-1_$_NON_CLUSTERED started.
+[DEBUG] [2011-06-05 22:46:08,377] [akka:event-driven:dispatcher:global-5] a.c.c.ActorProducer: Starting producer: Producer[actor://uuid:bf3925a0-8fde-11e0-a669-005056c00001?blocking=false]
+[INFO] [2011-06-05 22:46:08,440] [akka:event-driven:dispatcher:global-5] o.a.c.i.DefaultCamelContext: Route: bf3925a0-8fde-11e0-a669-005056c00001 started and consuming from: Endpoint[quartz://example?cron=0+*+*+*+*+%3F]
+[INFO] [2011-06-05 22:46:08,449] [akka:event-driven:dispatcher:global-5] a.c.ConsumerPublisher$: published actor Actor[com.redbee.smm.twitter.TwitterEventScheduler:bf3925a0-8fde-11e0-a669-005056c00001] at endpoint quartz://example?cron=0+*+*+*+*+?
+[INFO] [2011-06-05 22:46:08,649] [main] o.f.s.s.ServletTemplateEngine: Scalate template engine using working directory: /var/folders/wR/wRpv60uFHsK1fiNMIxtL0E+++TI/-Tmp-/scalate-5105130212720319760-workdir
+[DEBUG] [2011-06-05 22:46:16,269] [akka:event-driven:dispatcher:global-7] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-7
+[DEBUG] [2011-06-05 22:46:16,385] [akka:event-driven:dispatcher:global-8] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-8
+[DEBUG] [2011-06-05 22:47:00,075] [akka:event-driven:dispatcher:global-9] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-9
+[DEBUG] [2011-06-05 22:47:00,079] [akka:event-driven:dispatcher:global-10] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-10
+[INFO] [2011-06-05 22:47:26,773] [Scanner-0] a.c.Config$: Config [akka.conf] loaded from the application classpath.
+[DEBUG] [2011-06-05 22:47:26,850] [Scanner-0] a.d.Dispatchers$globalExecutorBasedEventDrivenDispatcher$: Starting up Dispatchers$globalExecutorBasedEventDrivenDispatcher$[akka:event-driven:dispatcher:global]
+	with throughput [5]
+[INFO] [2011-06-05 22:47:27,022] [Scanner-0] a.c.CamelContextManager$: Camel context initialized
+[INFO] [2011-06-05 22:47:27,024] [Scanner-0] o.a.c.i.DefaultCamelContext: Apache Camel 2.7.1 (CamelContext: camel-1) is starting
+[INFO] [2011-06-05 22:47:27,024] [Scanner-0] o.a.c.i.DefaultCamelContext: StreamCaching is enabled on CamelContext: camel-1
+[INFO] [2011-06-05 22:47:27,025] [Scanner-0] o.a.c.i.DefaultCamelContext: JMX enabled. Using ManagedManagementStrategy.
+[WARN] [2011-06-05 22:47:27,037] [Scanner-0] o.a.c.i.DefaultCamelContext: Cannot find needed classes for JMX lifecycle strategy. Needed class is in spring-context.jar using Spring 2.5 or newer (spring-jmx.jar using Spring 2.0.x). NoClassDefFoundError: org/springframework/jmx/export/metadata/JmxAttributeSource
+[WARN] [2011-06-05 22:47:27,037] [Scanner-0] o.a.c.i.DefaultCamelContext: Cannot use JMX. Fallback to using DefaultManagementStrategy (non JMX).
+[INFO] [2011-06-05 22:47:27,409] [Scanner-0] o.a.c.i.c.AnnotationTypeConverterLoader: Found 3 packages with 13 @Converter classes to load
+[INFO] [2011-06-05 22:47:27,438] [Scanner-0] o.a.c.i.c.DefaultTypeConverter: Loaded 148 type converters in 0.390 seconds
+[INFO] [2011-06-05 22:47:27,438] [Scanner-0] o.a.c.i.DefaultCamelContext: Total 0 routes, of which 0 is started.
+[INFO] [2011-06-05 22:47:27,439] [Scanner-0] o.a.c.i.DefaultCamelContext: Apache Camel 2.7.1 (CamelContext: camel-1) started in 0.415 seconds
+[INFO] [2011-06-05 22:47:27,439] [Scanner-0] a.c.CamelContextManager$: Camel context started
+[INFO] [2011-06-05 22:47:27,441] [Scanner-0] a.d.LazyExecutorServiceWrapper: Lazily initializing ExecutorService for 
+[DEBUG] [2011-06-05 22:47:27,472] [akka:event-driven:dispatcher:global-1] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-1
+[INFO] [2011-06-05 22:47:27,499] [Scanner-0] c.r.s.twitter: TwitterServiceActor initializing
+[DEBUG] [2011-06-05 22:47:27,524] [akka:event-driven:dispatcher:global-2] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-2
+[DEBUG] [2011-06-05 22:47:27,534] [akka:event-driven:dispatcher:global-3] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-3
+[DEBUG] [2011-06-05 22:47:27,538] [akka:event-driven:dispatcher:global-4] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-4
+[DEBUG] [2011-06-05 22:47:27,612] [akka:event-driven:dispatcher:global-5] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-5
+[INFO] [2011-06-05 22:47:27,700] [akka:event-driven:dispatcher:global-4] o.q.s.SimpleThreadPool: Job execution threads will use class loader of thread: akka:event-driven:dispatcher:global-4
+[INFO] [2011-06-05 22:47:27,755] [akka:event-driven:dispatcher:global-4] o.q.c.SchedulerSignalerImpl: Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+[INFO] [2011-06-05 22:47:27,755] [akka:event-driven:dispatcher:global-4] o.q.c.QuartzScheduler: Quartz Scheduler v.1.8.4 created.
+[INFO] [2011-06-05 22:47:27,757] [akka:event-driven:dispatcher:global-4] o.q.s.RAMJobStore: RAMJobStore initialized.
+[INFO] [2011-06-05 22:47:27,760] [akka:event-driven:dispatcher:global-4] o.q.c.QuartzScheduler: Scheduler meta-data: Quartz Scheduler (v1.8.4) 'DefaultQuartzScheduler-camel-1' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+[INFO] [2011-06-05 22:47:27,761] [akka:event-driven:dispatcher:global-4] o.q.i.StdSchedulerFactory: Quartz scheduler 'DefaultQuartzScheduler-camel-1' initialized from an externally provided properties instance.
+[INFO] [2011-06-05 22:47:27,761] [akka:event-driven:dispatcher:global-4] o.q.i.StdSchedulerFactory: Quartz scheduler version: 1.8.4
+[INFO] [2011-06-05 22:47:27,761] [akka:event-driven:dispatcher:global-4] o.a.c.c.q.QuartzComponent: Starting Quartz scheduler: DefaultQuartzScheduler-camel-1
+[INFO] [2011-06-05 22:47:27,762] [akka:event-driven:dispatcher:global-4] o.q.c.QuartzScheduler: Scheduler DefaultQuartzScheduler-camel-1_$_NON_CLUSTERED started.
+[DEBUG] [2011-06-05 22:47:27,866] [akka:event-driven:dispatcher:global-4] a.c.c.ActorProducer: Starting producer: Producer[actor://uuid:eeef0b70-8fde-11e0-9eb5-005056c00001?blocking=false]
+[INFO] [2011-06-05 22:47:27,873] [akka:event-driven:dispatcher:global-4] o.a.c.i.DefaultCamelContext: Route: eeef0b70-8fde-11e0-9eb5-005056c00001 started and consuming from: Endpoint[quartz://example?cron=0+*+*+*+*+%3F]
+[INFO] [2011-06-05 22:47:27,875] [akka:event-driven:dispatcher:global-4] a.c.ConsumerPublisher$: published actor Actor[com.redbee.smm.twitter.TwitterEventScheduler:eeef0b70-8fde-11e0-9eb5-005056c00001] at endpoint quartz://example?cron=0+*+*+*+*+?
+[INFO] [2011-06-05 22:47:27,967] [Scanner-0] o.f.s.s.ServletTemplateEngine: Scalate template engine using working directory: /var/folders/wR/wRpv60uFHsK1fiNMIxtL0E+++TI/-Tmp-/scalate-2817099000437753260-workdir
+[DEBUG] [2011-06-05 22:48:00,007] [akka:event-driven:dispatcher:global-11] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-11
+[DEBUG] [2011-06-05 22:48:00,008] [akka:event-driven:dispatcher:global-12] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-12
+[DEBUG] [2011-06-05 22:48:00,050] [akka:event-driven:dispatcher:global-6] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-6
+[DEBUG] [2011-06-05 22:48:00,055] [akka:event-driven:dispatcher:global-7] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-7
+[DEBUG] [2011-06-05 22:49:00,004] [akka:event-driven:dispatcher:global-13] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-13
+[DEBUG] [2011-06-05 22:49:00,004] [akka:event-driven:dispatcher:global-8] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-8
+[DEBUG] [2011-06-05 22:49:00,027] [akka:event-driven:dispatcher:global-9] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-9
+[DEBUG] [2011-06-05 22:49:00,027] [akka:event-driven:dispatcher:global-14] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-14
+[DEBUG] [2011-06-05 22:50:00,009] [akka:event-driven:dispatcher:global-10] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-10
+[DEBUG] [2011-06-05 22:50:00,010] [akka:event-driven:dispatcher:global-15] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-15
+[DEBUG] [2011-06-05 22:50:00,042] [akka:event-driven:dispatcher:global-11] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-11
+[DEBUG] [2011-06-05 22:50:00,043] [akka:event-driven:dispatcher:global-16] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-16
+[DEBUG] [2011-06-05 22:51:00,010] [akka:event-driven:dispatcher:global-12] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-12
+[DEBUG] [2011-06-05 22:51:00,035] [akka:event-driven:dispatcher:global-13] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-13
+[DEBUG] [2011-06-05 22:52:00,008] [akka:event-driven:dispatcher:global-14] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-14
+[DEBUG] [2011-06-05 22:52:00,009] [akka:event-driven:dispatcher:global-15] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-15
+[DEBUG] [2011-06-05 22:53:00,009] [akka:event-driven:dispatcher:global-16] a.d.MonitorableThread: Created thread akka:event-driven:dispatcher:global-16
+[INFO] [2011-06-05 22:54:59,620] [Scanner-0] a.c.Config$: Config [akka.conf] loaded from the application classpath.
+[INFO] [2011-06-05 22:54:59,842] [Scanner-0] a.c.CamelContextManager$: Camel context initialized
+[INFO] [2011-06-05 22:54:59,844] [Scanner-0] o.a.c.i.DefaultCamelContext: Apache Camel 2.7.1 (CamelContext: camel-1) is starting
+[INFO] [2011-06-05 22:54:59,845] [Scanner-0] o.a.c.i.DefaultCamelContext: StreamCaching is enabled on CamelContext: camel-1
+[INFO] [2011-06-05 22:54:59,846] [Scanner-0] o.a.c.i.DefaultCamelContext: JMX enabled. Using ManagedManagementStrategy.
+[WARN] [2011-06-05 22:54:59,859] [Scanner-0] o.a.c.i.DefaultCamelContext: Cannot find needed classes for JMX lifecycle strategy. Needed class is in spring-context.jar using Spring 2.5 or newer (spring-jmx.jar using Spring 2.0.x). NoClassDefFoundError: org/springframework/jmx/export/metadata/JmxAttributeSource
+[WARN] [2011-06-05 22:54:59,860] [Scanner-0] o.a.c.i.DefaultCamelContext: Cannot use JMX. Fallback to using DefaultManagementStrategy (non JMX).
+[INFO] [2011-06-05 22:55:00,246] [Scanner-0] o.a.c.i.c.AnnotationTypeConverterLoader: Found 3 packages with 13 @Converter classes to load
+[INFO] [2011-06-05 22:55:00,273] [Scanner-0] o.a.c.i.c.DefaultTypeConverter: Loaded 148 type converters in 0.402 seconds
+[INFO] [2011-06-05 22:55:00,273] [Scanner-0] o.a.c.i.DefaultCamelContext: Total 0 routes, of which 0 is started.
+[INFO] [2011-06-05 22:55:00,273] [Scanner-0] o.a.c.i.DefaultCamelContext: Apache Camel 2.7.1 (CamelContext: camel-1) started in 0.429 seconds
+[INFO] [2011-06-05 22:55:00,274] [Scanner-0] a.c.CamelContextManager$: Camel context started
+[INFO] [2011-06-05 22:55:00,276] [Scanner-0] a.d.LazyExecutorServiceWrapper: Lazily initializing ExecutorService for 
+[INFO] [2011-06-05 22:55:00,306] [Scanner-0] c.r.s.twitter: TwitterServiceActor initializing
+[INFO] [2011-06-05 22:55:00,524] [akka:event-driven:dispatcher:global-5] o.q.s.SimpleThreadPool: Job execution threads will use class loader of thread: akka:event-driven:dispatcher:global-5
+[INFO] [2011-06-05 22:55:00,608] [akka:event-driven:dispatcher:global-5] o.q.c.SchedulerSignalerImpl: Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+[INFO] [2011-06-05 22:55:00,609] [akka:event-driven:dispatcher:global-5] o.q.c.QuartzScheduler: Quartz Scheduler v.1.8.4 created.
+[INFO] [2011-06-05 22:55:00,612] [akka:event-driven:dispatcher:global-5] o.q.s.RAMJobStore: RAMJobStore initialized.
+[INFO] [2011-06-05 22:55:00,614] [akka:event-driven:dispatcher:global-5] o.q.c.QuartzScheduler: Scheduler meta-data: Quartz Scheduler (v1.8.4) 'DefaultQuartzScheduler-camel-1' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+[INFO] [2011-06-05 22:55:00,616] [akka:event-driven:dispatcher:global-5] o.q.i.StdSchedulerFactory: Quartz scheduler 'DefaultQuartzScheduler-camel-1' initialized from an externally provided properties instance.
+[INFO] [2011-06-05 22:55:00,616] [akka:event-driven:dispatcher:global-5] o.q.i.StdSchedulerFactory: Quartz scheduler version: 1.8.4
+[INFO] [2011-06-05 22:55:00,616] [akka:event-driven:dispatcher:global-5] o.a.c.c.q.QuartzComponent: Starting Quartz scheduler: DefaultQuartzScheduler-camel-1
+[INFO] [2011-06-05 22:55:00,617] [akka:event-driven:dispatcher:global-5] o.q.c.QuartzScheduler: Scheduler DefaultQuartzScheduler-camel-1_$_NON_CLUSTERED started.
+[INFO] [2011-06-05 22:55:00,752] [akka:event-driven:dispatcher:global-5] o.a.c.i.DefaultCamelContext: Route: fcd2b060-8fdf-11e0-94ec-005056c00001 started and consuming from: Endpoint[quartz://example?cron=0+*+*+*+*+%3F]
+[INFO] [2011-06-05 22:55:00,758] [akka:event-driven:dispatcher:global-5] a.c.ConsumerPublisher$: published actor Actor[com.redbee.smm.twitter.TwitterEventScheduler:fcd2b060-8fdf-11e0-94ec-005056c00001] at endpoint quartz://example?cron=0+*+*+*+*+?
+[INFO] [2011-06-05 22:55:00,855] [Scanner-0] o.f.s.s.ServletTemplateEngine: Scalate template engine using working directory: /var/folders/wR/wRpv60uFHsK1fiNMIxtL0E+++TI/-Tmp-/scalate-4140843654220246296-workdir

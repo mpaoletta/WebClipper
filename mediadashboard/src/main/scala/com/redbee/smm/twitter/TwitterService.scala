@@ -7,6 +7,8 @@ import akka.camel.{ Message, Consumer }
 import java.text.SimpleDateFormat
 import com.redbee.smm.twitter.dao._
 import akka.camel.CamelServiceManager._
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 case class Restart()
 case class Track(guide: String, twitterKeywords: Array[String])
@@ -18,7 +20,10 @@ case class Update()
  */
 class TwitterServiceActor extends Actor {
 
-  println("TwitterServiceActor initializing")
+  val logger = LoggerFactory.getLogger(getClass);
+
+  
+  logger.info("TwitterServiceActor initializing")
   
   val twitterStreamOwner = actorOf(new TwitterStreamOwnerActor).start
   actorOf(new TwitterEventScheduler).start
@@ -29,7 +34,11 @@ class TwitterServiceActor extends Actor {
   
   def receive = {
 
-    case t: Track => track(t) // {guias += (g -> new Guide(g, ks.toArray))}
+    case t: Track => {
+      logger.info("Track: " + t.guide)
+      track(t) // {guias += (g -> new Guide(g, ks.toArray))}
+      self.reply(true)
+    }
 
     case Discard(g) => {
       twitterDAO discard g
@@ -53,9 +62,10 @@ class TwitterServiceActor extends Actor {
     updateAvailable = false
   }
 
-  private def track(trackInfo: Track) = {
-    twitterDAO addTracked trackInfo
+  private def track(trackInfo: Track): Boolean = {
+    updateAvailable = twitterDAO addTracked trackInfo
     updateAvailable = true
+    updateAvailable
   }
 
   private def updateWithTweet(tweet: Tweet): Unit = {

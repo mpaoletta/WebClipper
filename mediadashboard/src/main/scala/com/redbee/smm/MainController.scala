@@ -45,9 +45,9 @@ class MainController extends ScalatraFilter with ScalateSupport {
         Operaciones:
         <li>/metrics: Metricas simuladas</li>
         <li>/restart</li>
-        <li>/:guides/track?keywords=key1,key2,key3</li>
-        <li>/:guides/discard</li>
-    	<li>/query?guides;guide1,guide2&aggregation;[day|hour|minute]&till;[yyyyMMdd|yyyyMMddHHmm]</li>
+        <li>/guides/:guidename/track?keywords=key1,key2,key3</li>
+        <li>/guides/:guidename/discard</li>
+    	<li>/query?guides;guide1,guide2&aggregation;[day|hour|minute]&till;[yyyyMMdd|yyyyMMddHHmm|now]&span;numberofpoints</li>
       </body>
     </html>
   }
@@ -121,8 +121,15 @@ class MainController extends ScalatraFilter with ScalateSupport {
     val guideList = params("guides").split(',').toList
     val aggregation: String = params("aggregation")
     val span: Int = params("span").toInt
-    val parser = { if (List("hourly", "realtime", "minute").contains(aggregation)) sdtf else sdf }
-    val till = parser.parse(params("till"))
+    val till = {
+		if(params("till") == "now") {
+		  new java.util.Date
+		}
+	    else {
+		    val parser = { if (List("hourly", "realtime", "minute").contains(aggregation)) sdtf else sdf }
+		    parser.parse(params("till"))
+	    }
+    }
     val mts = RealTwitterMetrics.metricsFor(guideList, aggregation, span, till)
     tojson(mts).toString
   }

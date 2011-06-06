@@ -21,7 +21,9 @@ object TwitterStorageAndMetricsDAO {
 
   val MAX_KEYWORDS = 200
   val redis: RedisClient = new RedisClient("localhost", 6379)
-  val jedis = new Jedis("localhost");
+  //val jedis = new Jedis("localhost");
+  val jedisPool = new JedisPool("localhost")
+  jedisPool.init
   val GUIDES = "guides:"
   val GUIDES_MEMBERS = GUIDES + "members"
   val formatMinute = new SimpleDateFormat("yyyyMMddHHmm")
@@ -29,11 +31,14 @@ object TwitterStorageAndMetricsDAO {
   val formatDay = new SimpleDateFormat("yyyyMMdd")
 
   var keywordsxGuia: HashMap[String, HashSet[String]] = null
+  var userIdsxGuia: HashMap[Long, HashSet[String]] = null
 
   def addTracked(trackInfo: Track): Boolean = {
-
-    
-    if ((getTrackInfo.keySet.size + trackInfo.twitterKeywords.size) <= MAX_KEYWORDS) {
+    // TODO Revisar, no me queda claro que asi se chequee el limite
+    if ((getGuidesByKeyword.keySet.size
+      + getGuidesByUser.keySet.size
+      + trackInfo.twitterKeywords.size
+      + trackInfo.users.size) <= MAX_KEYWORDS) {
       redis.pipeline { p =>
         p.sadd(GUIDES_MEMBERS, trackInfo.guide)
         val twitterKeywordSet = twitterKeywordSetFor(trackInfo.guide)
@@ -41,14 +46,18 @@ object TwitterStorageAndMetricsDAO {
           p.sadd(twitterKeywordSet, keyword)
           keywordsxGuia.getOrElseUpdate(keyword, new HashSet[String]) += trackInfo.guide
         }
+        val twitterUserSet = twitterUserSetFor(trackInfo.guide)
+        for (userId <- trackInfo.users) {
+          p.sadd(twitterUserSet, userId)
+          userIdsxGuia.getOrElseUpdate(userId, new HashSet[String]) += trackInfo.guide
+        }
       }
       true
-    }
-    else 
+    } else
       false
   }
 
-  def getTrackInfo: HashMap[String, HashSet[String]] = {
+  def getGuidesByKeyword: HashMap[String, HashSet[String]] = {
 
     if (keywordsxGuia == null) {
       var keywords = new HashMap[String, HashSet[String]]
@@ -62,7 +71,22 @@ object TwitterStorageAndMetricsDAO {
       keywordsxGuia = keywords
     }
     keywordsxGuia
+  }
 
+  def getGuidesByUser: HashMap[Long, HashSet[String]] = {
+
+    if (userIdsxGuia == null) {
+      var userIds = new HashMap[Long, HashSet[String]]
+
+      for (guide <- redis.smembers(GUIDES_MEMBERS).get) {
+        for (userId <- redis.smembers(twitterUserSetFor(guide.get)).get) {
+          userIds.getOrElseUpdate(userId.get.toLong, new HashSet[String]) += guide.get
+        }
+      }
+
+      userIdsxGuia = userIds
+    }
+    userIdsxGuia
   }
 
   def discard(g: String) = {
@@ -85,6 +109,10 @@ object TwitterStorageAndMetricsDAO {
 
   private def twitterKeywordSetFor(g: String): String = {
     twitterPrefixFor(g) + "keywords"
+  }
+
+  private def twitterUserSetFor(g: String): String = {
+    twitterPrefixFor(g) + "users"
   }
 
   def updateWithStatus(tweet: Tweet): Unit = {
@@ -129,42 +157,47 @@ object TwitterStorageAndMetricsDAO {
 
   def metricsFor(point: String, guide: String): Metric = {
 
-    val key: String = twitterPrefixFor(guide) + point
-    println("key: " + key)
+    val jedis = jedisPool.getResource
+    try {
 
-    //    if (redis.exists(key)) {
-    //      var shash: Option[Map[String, String]] = None
-    //      try {
-    //        
-    //    	  shash = redis.hgetall(key)
-    //
-    //      } 
-    //      catch {
-    //        case e:Throwable => e.printStackTrace
-    //      }
-    //
-    //      shash match {
-    //        case Some(hash: Map[String, String]) => {
-    //          val nhash = hash.mapValues(_.toLong)
-    //          new Metric(point, nhash.getOrElse("tweets", 0), nhash.getOrElse("tweetsPos", 0), nhash.getOrElse("tweetsNeutral", 0), nhash.getOrElse("tweetsNeg", 0), nhash.getOrElse("tweetsP", 0), nhash.getOrElse("tweetsPPos", 0), nhash.getOrElse("tweetsPNeutral", 0), nhash.getOrElse("tweetsPNeg", 0))
-    //
-    //        }
-    //        case _ => {
-    //          new Metric(point, 0, 0, 0, 0, 0, 0, 0, 0)
-    //        }
-    //      }
-    //
-    //    } else
-    //      new Metric(point, 0, 0, 0, 0, 0, 0, 0, 0)
+      val key: String = twitterPrefixFor(guide) + point
+      println("key: " + key)
 
-    val mapa: java.util.Map[String, String] = jedis.hgetAll(key)
-    if (mapa == null) {
-      new Metric(point, 0, 0, 0, 0, 0, 0, 0, 0)
-    } else {
-      val smap = mapa.asScala
-      val nhash = smap.mapValues(_.toLong)
-      new Metric(point, nhash.getOrElse("tweets", 0), nhash.getOrElse("tweetsPos", 0), nhash.getOrElse("tweetsNeutral", 0), nhash.getOrElse("tweetsNeg", 0), nhash.getOrElse("tweetsP", 0), nhash.getOrElse("tweetsPPos", 0), nhash.getOrElse("tweetsPNeutral", 0), nhash.getOrElse("tweetsPNeg", 0))
+      //    if (redis.exists(key)) {
+      //      var shash: Option[Map[String, String]] = None
+      //      try {
+      //        
+      //    	  shash = redis.hgetall(key)
+      //
+      //      } 
+      //      catch {
+      //        case e:Throwable => e.printStackTrace
+      //      }
+      //
+      //      shash match {
+      //        case Some(hash: Map[String, String]) => {
+      //          val nhash = hash.mapValues(_.toLong)
+      //          new Metric(point, nhash.getOrElse("tweets", 0), nhash.getOrElse("tweetsPos", 0), nhash.getOrElse("tweetsNeutral", 0), nhash.getOrElse("tweetsNeg", 0), nhash.getOrElse("tweetsP", 0), nhash.getOrElse("tweetsPPos", 0), nhash.getOrElse("tweetsPNeutral", 0), nhash.getOrElse("tweetsPNeg", 0))
+      //
+      //        }
+      //        case _ => {
+      //          new Metric(point, 0, 0, 0, 0, 0, 0, 0, 0)
+      //        }
+      //      }
+      //
+      //    } else
+      //      new Metric(point, 0, 0, 0, 0, 0, 0, 0, 0)
 
+      val mapa: java.util.Map[String, String] = jedis.hgetAll(key)
+      if (mapa == null) {
+        new Metric(point, 0, 0, 0, 0, 0, 0, 0, 0)
+      } else {
+        val smap = mapa.asScala
+        val nhash = smap.mapValues(_.toLong)
+        new Metric(point, nhash.getOrElse("tweets", 0), nhash.getOrElse("tweetsPos", 0), nhash.getOrElse("tweetsNeutral", 0), nhash.getOrElse("tweetsNeg", 0), nhash.getOrElse("tweetsP", 0), nhash.getOrElse("tweetsPPos", 0), nhash.getOrElse("tweetsPNeutral", 0), nhash.getOrElse("tweetsPNeg", 0))
+      }
+    } finally {
+      jedisPool.returnResource(jedis)
     }
   }
 

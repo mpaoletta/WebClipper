@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 case class Restart()
-case class Track(guide: String, twitterKeywords: Array[String])
+case class Track(guide: String, twitterKeywords: Array[String], users: Array[Long])
 case class Discard(guide: String)
 case class Update()
 
@@ -30,7 +30,6 @@ class TwitterServiceActor extends Actor {
   
   var updateAvailable = false
   var twitterDAO = com.redbee.smm.twitter.dao.TwitterStorageAndMetricsDAO
-  //var keywordsxGuia = new scala.collection.mutable.HashMap[String, scala.collection.mutable.HashSet[String]]
   
   def receive = {
 
@@ -52,13 +51,13 @@ class TwitterServiceActor extends Actor {
 
     case Restart => restart
 
-    case "guides" => self.reply(twitterDAO.getTrackInfo.keySet)
+    case "guides" => self.reply(twitterDAO.getGuidesByKeyword.values ++ twitterDAO.getGuidesByUser.values)
     
   }
   
 
   private def restart: Unit = {
-    twitterStreamOwner ! new TrackKeywords(twitterDAO.getTrackInfo.keySet.toArray)
+    twitterStreamOwner ! new TrackKeywords(twitterDAO.getGuidesByKeyword.keySet.toArray, twitterDAO.getGuidesByUser.keySet.toArray)
     updateAvailable = false
   }
 
@@ -72,12 +71,16 @@ class TwitterServiceActor extends Actor {
 
     val status = tweet.text.toLowerCase
     var guides = new scala.collection.mutable.HashSet[String]
-    for (keyword <- twitterDAO.getTrackInfo.keys) {
+    for (keyword <- twitterDAO.getGuidesByKeyword.keys) {
       if (status.contains(keyword)) {
-        guides ++= twitterDAO.getTrackInfo(keyword)
+        guides ++= twitterDAO.getGuidesByKeyword(keyword)
       }
     }
-
+    for (userId <- twitterDAO.getGuidesByUser.keys) {
+      if (List(tweet.author.id, tweet.inReplyToUserId) contains userId) {
+        guides ++= twitterDAO.getGuidesByUser(userId)
+      }
+    }
     val (pond, neg, neu, pos) = rate(tweet)
 
     val enriched = tweet.enrich(pond, neg, neu, pos, guides.toList)

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * TODO implementar aqui logica para delays de reinicios lineales o exponenciales
  */
-case object DelayedRestart
+case class DelayedRestart(seconds: Long)
 
 /**
  * Encargado de ejecutar tareas una vez x segundo
@@ -23,12 +23,11 @@ class TwitterEventScheduler extends Actor with Consumer {
   // Una vez x minuto
   def endpointUri = "quartz://example?cron=0+*+*+*+*+?"
 
-
   def receive = {
-    case DelayedRestart => {
+    case DelayedRestart(t) => {
       // Debe haber una forma razonable de hacer esto...
-      logger.info("Esperando 60 segundos para reinicio")
-      Thread sleep 60000l
+      logger.info("Esperando " + (t/1000) + " segundos para reinicio")
+      Thread sleep t
       logger.info("Reiniciando")
       Actor.registry.actorsFor("com.redbee.smm.twitter.TwitterServiceActor").head ! Restart
     }

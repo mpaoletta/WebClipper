@@ -2,11 +2,11 @@ package com.redbee.smm.twitter
 
 import java.util.Date
 
-case class Tweet(id: Long, author: User, text: String, retweetCount: Long, createdAt: Date, hashtags: List[String]
+case class Tweet(id: Long, author: User, inReplyToUserId: Long, text: String, retweetCount: Long, createdAt: Date, hashtags: List[String]
 , rate: Int, neg: Int, neu: Int, pos: Int, guides: List[String]) {
   
   def enrich(_rate: Int, _neg: Int, _neu: Int, _pos: Int, _guides: List[String]): Tweet = {
-    new Tweet(id, author, text, retweetCount, createdAt, hashtags, _rate, _neg, _neu, _pos, _guides)
+    new Tweet(id, author, inReplyToUserId, text, retweetCount, createdAt, hashtags, _rate, _neg, _neu, _pos, _guides)
   }
   
 }

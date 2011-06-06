@@ -19,7 +19,7 @@ import scala.collection.mutable.ListBuffer
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-case class TrackKeywords(keywords: Array[String])
+case class TrackKeywords(keywords: Array[String], userIds: Array[Long])
 
 class TwitterStreamOwnerActor extends Actor with StatusListener {
 
@@ -31,18 +31,24 @@ class TwitterStreamOwnerActor extends Actor with StatusListener {
   val tsf = new TwitterStreamFactory(conf.buildConfiguration);
   var twitterStream: TwitterStream = null // TODO manejar desconexion
   var keywords: Array[java.lang.String] = null
+  var userIds: Array[Long] = null
   var lastRestart: Long = 0
 
   def receive = {
 
     case Restart => restart
 
-    case TrackKeywords(keys) => { logger.info("TrackKeywords: " + keys.toList); keywords = keys; restart }
+    case TrackKeywords(keys, users) => { 
+      logger.info("TrackKeywords: " + keys.toList + " - UserIds: " + users.toList)
+      keywords = keys
+      userIds = users
+      restart 
+    }
   }
 
   def restart: Unit = {
 
-    if (keywords != null && keywords.length > 0) {
+    if ((keywords != null && keywords.length > 0) || (userIds != null && userIds.length > 0)) {
       if (System.currentTimeMillis - lastRestart > 60000) {
         lastRestart = System.currentTimeMillis
         if (twitterStream != null) {
@@ -52,18 +58,23 @@ class TwitterStreamOwnerActor extends Actor with StatusListener {
         twitterStream = tsf.getInstance
         twitterStream addListener this
         var fq = new FilterQuery
-        fq.track(keywords)
+        if(keywords != null & keywords.length > 0) fq.track(keywords)
+        if(userIds != null & userIds.length > 0) fq.follow(userIds)
         twitterStream filter fq
       } else {
         logger.warn("Esperando para reiniciar")
-        Actor.registry.actorsFor("com.redbee.smm.twitter.TwitterEventScheduler").head ! DelayedRestart
+        scheduleRestart
       }
     } else {
-      logger.warn("No reiniciado por no haber keywords configuradas")
+      logger.warn("No reiniciado por no haber keywords o usuarios configuradas")
     }
 
   }
 
+  private def scheduleRestart: Unit = {
+    Actor.registry.actorsFor("com.redbee.smm.twitter.TwitterEventScheduler").head ! new DelayedRestart( (System.currentTimeMillis - lastRestart) min 60000l)
+  }
+  
   def onStatus(status: Status): Unit = {
 
     val u = status.getUser
@@ -74,7 +85,7 @@ class TwitterStreamOwnerActor extends Actor with StatusListener {
     for (ht <- status.getHashtagEntities) {
       hts += ht.getText
     }
-    val tweet = new Tweet(status.getId, author, status.getText, status.getRetweetCount, status.getCreatedAt, hts.readOnly, 0, 0, 0, 0, null)
+    val tweet = new Tweet(status.getId, author, status.getInReplyToUserId, status.getText, status.getRetweetCount, status.getCreatedAt, hts.readOnly, 0, 0, 0, 0, null)
 
     Actor.registry.actorsFor("com.redbee.smm.twitter.TwitterServiceActor").head ! tweet
   }
@@ -87,7 +98,7 @@ class TwitterStreamOwnerActor extends Actor with StatusListener {
    * @since Twitter4J 2.1.0
    */
   def onDeletionNotice(statusDeletionNotice: StatusDeletionNotice): Unit = {
-    println("onDeletionNotice: " + statusDeletionNotice.getStatusId)
+    logger.warn("onDeletionNotice: " + statusDeletionNotice.getStatusId)
   }
 
   /**
@@ -101,7 +112,7 @@ class TwitterStreamOwnerActor extends Actor with StatusListener {
    * @since Twitter4J 2.1.0
    */
   def onTrackLimitationNotice(numberOfLimitedStatuses: Int): Unit = {
-    println("onTrackLimitationNotice: " + numberOfLimitedStatuses)
+    logger.warn("onTrackLimitationNotice: " + numberOfLimitedStatuses)
   }
 
   /**
@@ -112,12 +123,11 @@ class TwitterStreamOwnerActor extends Actor with StatusListener {
    * @since Twitter4J 2.1.9
    */
   def onScrubGeo(userId: Long, upToStatusId: Long): Unit = {
-
   }
 
   def onException(ex: Exception): Unit = {
-    ex.printStackTrace
-    restart
+    logger.error("Exception on twitter stream. Restarting", ex)
+    scheduleRestart
   }
 }
 

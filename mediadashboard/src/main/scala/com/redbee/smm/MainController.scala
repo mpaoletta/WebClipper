@@ -25,7 +25,7 @@ class MainController extends ScalatraFilter with ScalateSupport {
 
   val twitterService = actorOf(new com.redbee.smm.twitter.TwitterServiceActor).start
 
-  implicit val TrackFormat: Format[Track] = asProduct2("guide", "keywords")(Track)(Track.unapply(_).get)
+  implicit val TrackFormat: Format[Track] = asProduct3("guide", "keywords", "users")(Track)(Track.unapply(_).get)
   //implicit val DiscardFormat: Format[Discard] = as("guide")(Discard)(Discard.unapply(_).get)
 
   implicit val MetricsFormat: Format[Metric] = asProduct9("point", "tweets", "tweetsPos", "tweetsNeutral", "tweetsNeg", "tweetsP", "tweetsPPos", "tweetsPNeutral", "tweetsPNeg")(Metric)(Metric.unapply(_).get)
@@ -45,7 +45,7 @@ class MainController extends ScalatraFilter with ScalateSupport {
         Operaciones:
         <li>/metrics: Metricas simuladas</li>
         <li>/restart</li>
-        <li>/guides/:guidename/track?keywords=key1,key2,key3</li>
+        <li>/guides/:guidename/track?keywords;key1,key2,key3&users;userId1,userId2</li>
         <li>/guides/:guidename/discard</li>
     	<li>/query?guides;guide1,guide2&aggregation;[day|hour|minute]&till;[yyyyMMdd|yyyyMMddHHmm|now]&span;numberofpoints</li>
       </body>
@@ -66,10 +66,18 @@ class MainController extends ScalatraFilter with ScalateSupport {
   //    } ~
   get("/guides/:guide/track") {
     contentType = "application/json"
-    val trackInfo = new Track(params("guide"), params("keywords").split(','))
+    val keywords = params.get("keywords") match {
+      case None => new Array[String](0)
+      case Some(s) => s.split(',')
+    }
+    val users = params.get("users") match {
+      case None => new Array[Long](0)
+      case Some(s) => s.split(',').map(_.toLong)
+    }
+    val trackInfo = new Track(params("guide"), keywords, users)
     twitterService !! trackInfo match {
       case Some(true) => tojson(trackInfo).toString
-      case Some(false) => renderStatus("ERROR", "No more keyword slots available")
+      case Some(false) => renderStatus("ERROR", "No more keyword/user slots available")
       case None => renderStatus("ERROR", "Timeout")
     }
   }
@@ -95,7 +103,6 @@ class MainController extends ScalatraFilter with ScalateSupport {
     }
     
     //serializer out guides.get.asInstanceOf[Iterable[String]]
-    
   }
 
   get("/getmetrics") {

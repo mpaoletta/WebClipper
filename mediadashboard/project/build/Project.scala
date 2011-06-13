@@ -66,5 +66,7 @@ class Project(info: ProjectInfo) extends DefaultWebProject(info) with AkkaProjec
   val scalate = "org.scalatra" %% "scalatra-scalate" % scalatraVersion
   
   val jedis = "redis.clients" % "jedis" % "1.3.0" withSources ()
+  
+  val lift_json = "net.liftweb" %% "lift-json" % "2.4-M1"
 
 }

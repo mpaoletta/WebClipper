@@ -16,6 +16,9 @@ import scala.collection.mutable.HashSet
 import java.text.SimpleDateFormat
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import net.liftweb.json._
+import net.liftweb.json.Serialization.write
+
 
 class MainController extends ScalatraFilter with ScalateSupport {
 
@@ -25,18 +28,25 @@ class MainController extends ScalatraFilter with ScalateSupport {
 
   val twitterService = actorOf(new com.redbee.smm.twitter.TwitterServiceActor).start
 
-  implicit val TrackFormat: Format[Track] = asProduct3("guide", "keywords", "users")(Track)(Track.unapply(_).get)
+  implicit val TrackFormat: Format[Track] = asProduct5("guide", "keywords", "brandUsers", "activists", "trackedUsers")(Track)(Track.unapply(_).get)
   //implicit val DiscardFormat: Format[Discard] = as("guide")(Discard)(Discard.unapply(_).get)
 
   implicit val MetricsFormat: Format[Metric] = asProduct9("point", "tweets", "tweetsPos", "tweetsNeutral", "tweetsNeg", "tweetsP", "tweetsPPos", "tweetsPNeutral", "tweetsPNeg")(Metric)(Metric.unapply(_).get)
 
   implicit val SeriesFormat: Format[Series] = asProduct2("name", "data")(Series)(Series.unapply(_).get)
+//  
+//  implicit val TweetFormat: Format[Tweet] = asProduct8("id", "author", "inReplyToUserId", "text", "retweetCount", "createdAt", "hashtags", "guides")(Tweet)(Tweet.unapply(_).get)
+//  implicit val UserFormat: Format[User] = asProduct8("id", "author", "inReplyToUserId", "text", "retweetCount", "createdAt", "hashtags", "guides")(User)(Tweet.unapply(_).get)
+//
 
-  private val serializer = Serializer.SJSON
+  private val serializer = sjson.json.Serializer.SJSON
 
   val sdf = new SimpleDateFormat("yyyyMMdd")
   val sdtf = new SimpleDateFormat("yyyyMMddHHmm")
 
+  implicit val formats = DefaultFormats
+
+  
   get("/") {
     contentType = "text/html"
     <html>
@@ -70,11 +80,10 @@ class MainController extends ScalatraFilter with ScalateSupport {
       case None => new Array[String](0)
       case Some(s) => s.split(',')
     }
-    val users = params.get("users") match {
-      case None => new Array[Long](0)
-      case Some(s) => s.split(',').map(_.toLong)
-    }
-    val trackInfo = new Track(params("guide"), keywords, users)
+    val brandUsers = parseNumberList("brandUsers")
+    val activists = parseNumberList("activists")
+    val trackedUsers = parseNumberList("trackedUsers")
+    val trackInfo = new Track(params("guide"), keywords, brandUsers, activists, trackedUsers)
     twitterService !! trackInfo match {
       case Some(true) => tojson(trackInfo).toString
       case Some(false) => renderStatus("ERROR", "No more keyword/user slots available")
@@ -143,7 +152,21 @@ class MainController extends ScalatraFilter with ScalateSupport {
     val mts = RealTwitterMetrics.metricsFor(guideList, aggregation, span, till)
     tojson(mts).toString
   }
+  
+  get("/tweets/find") {
+	  contentType = "application/json"
+      val from = dateParam("from")
+      val to = dateParam("to")
+      val guide = params("guide")
+      val tweets = TwitterStorageAndMetricsDAO.tweets(from, to, guide, 5)
+      write(tweets)
+  }
 
+  // Como se hace esto mas lindo?
+  private def dateParam(sd: String): java.util.Date = {
+    if(params(sd).length == 8) sdf.parse(params(sd)) else sdtf.parse(params(sd))
+  }
+  
   notFound {
     // If no route matches, then try to render a Scaml template
     val templateBase = requestPath match {
@@ -157,6 +180,14 @@ class MainController extends ScalatraFilter with ScalateSupport {
         templateEngine.layout(templatePath)
       case _ =>
         filterChain.doFilter(request, response)
+    }
+  }
+  
+  
+  private def parseNumberList(paramName: String): Array[Long] = {
+    params.get(paramName) match {
+		case None => new Array[Long](0)
+		case Some(s) => s.split(',').map(_.toLong)
     }
   }
   

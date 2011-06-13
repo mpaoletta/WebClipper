@@ -3,6 +3,7 @@ package com.redbee.smm.twitter.dao
 import scala.collection.JavaConverters._
 import com.redbee.smm.twitter.Track
 import com.redbee.smm.twitter.Tweet
+import com.redbee.smm.twitter.User
 import com.redis._
 import java.text.SimpleDateFormat
 
@@ -19,6 +20,10 @@ import com.redbee.smm.twitter.Metric
 
 object TwitterStorageAndMetricsDAO {
 
+  com.mongodb.casbah.commons.conversions.scala.RegisterConversionHelpers()
+
+  val mongo = MongoConnection()
+  
   val MAX_KEYWORDS = 200
   val redis: RedisClient = new RedisClient("localhost", 6379)
   //val jedis = new Jedis("localhost");
@@ -60,11 +65,23 @@ object TwitterStorageAndMetricsDAO {
   def getGuidesTrackInfo: List[Track] = {
     var lista = new scala.collection.mutable.ListBuffer[Track]()
     for (guide <- redis.smembers(GUIDES_MEMBERS).get) {  
-      val keywords: Array[String] = redis.smembers(twitterKeywordSetFor(guide.get)).get.map(_.get).toArray
-      val users: Array[Long] = redis.smembers(twitterUserSetFor(guide.get)).get.map(_.get.toLong).toArray
-      lista += new Track(guide.get, keywords, users)
+      val keywords: Array[String] = getTwitterSetFor(guide.get, "")// redis.smembers(twitterKeywordSetFor(guide.get)).get.map(_.get).toArray
+      //val users: Array[Long] = redis.smembers(twitterUserSetFor(guide.get)).get.map(_.get.toLong).toArray
+      val brandUsers = getTwitterNumberSetFor(guide.get, "brandUsers")
+      val activists = getTwitterNumberSetFor(guide.get, "activists")
+      val trackedUsers = getTwitterNumberSetFor(guide.get, "trackedUsers")
+      lista += new Track(guide.get, keywords, brandUsers, activists, trackedUsers)
     }
     lista.toList
+  }
+  
+  
+  private def getTwitterSetFor(guide: String, set: String): Array[String] = {
+    redis.smembers(twitterSetFor(guide, set)).get.map(_.get).toArray
+  }
+
+  private def getTwitterNumberSetFor(guide: String, set: String): Array[Long] = {
+    getTwitterSetFor(guide, set).map(_.toLong)
   }
 
   def getGuidesByKeyword: HashMap[String, HashSet[String]] = {
@@ -116,6 +133,10 @@ object TwitterStorageAndMetricsDAO {
   private def twitterPrefixFor(g: String): String = {
     GUIDES + g + ":twitter:"
   }
+  
+  private def twitterSetFor(guide: String, set: String): String = {
+    twitterPrefixFor(guide) + set
+  }
 
   private def twitterKeywordSetFor(g: String): String = {
     twitterPrefixFor(g) + "keywords"
@@ -135,6 +156,7 @@ object TwitterStorageAndMetricsDAO {
 
   private def store(tweet: Tweet): Unit = {
     TweetDAO save tweet
+    UserDAO save tweet.author
   }
 
   private def updateMetrics(tweet: Tweet): Unit = {
@@ -211,7 +233,29 @@ object TwitterStorageAndMetricsDAO {
     }
   }
 
+    def tweets(from: java.util.Date, to: java.util.Date, guide: String, limit: Int): List[Tweet] = {
+    	TweetDAO.findTweetsByDateAndGuide(from, to, guide, limit)
+    }
+  
 }
 
-object TweetDAO extends SalatDAO[Tweet, ObjectId](collection = MongoConnection()("smm")("tweets"))
+object UserDAO extends  SalatDAO[User, ObjectId](collection = TwitterStorageAndMetricsDAO.mongo("smm")("users")) {
+  
+}
+
+object TweetDAO extends SalatDAO[Tweet, ObjectId](collection = TwitterStorageAndMetricsDAO.mongo("smm")("tweets")) {
+  
+  def findTweetsByDateAndGuide(from: java.util.Date, to: java.util.Date, guide: String, limit: Int): List[Tweet] = {
+//var startdt = new Date(2011,5,6,0,0,0)
+//var enddt = new Date(2011,5,6,4,0,0)
+//
+//db.tweets.find({ createdAt :  {$gte: startdt, $lt:enddt} , guides: { $in :  ["nike","adidas"] }}).sort({ rate : -1 }).limit(5)
+    this.find(ref=MongoDBObject("createdAt" -> MongoDBObject("$gte" -> from, "$lte" -> to), "guides" -> MongoDBObject("$in" -> List(guide))))
+    	.sort(orderBy = MongoDBObject("rate" -> -1)) // sort by _id desc
+		.skip(1)
+		.limit(5)
+		.toList
+  } 
+  
+}
 

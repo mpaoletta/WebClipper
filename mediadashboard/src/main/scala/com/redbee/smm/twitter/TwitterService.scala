@@ -9,9 +9,13 @@ import com.redbee.smm.twitter.dao._
 import akka.camel.CamelServiceManager._
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import scala.collection.mutable.ListBuffer
 
 case class Restart()
-case class Track(guide: String, twitterKeywords: Array[String], users: Array[Long])
+case class Track(guide: String, twitterKeywords: Array[String], brandUsers: Array[Long]
+, activists: Array[Long], trackedUsers: Array[Long]) {
+  def users: Array[Long] = (new ListBuffer() ++ brandUsers ++ activists ++ trackedUsers).toArray
+}
 case class Discard(guide: String)
 case class Update()
 

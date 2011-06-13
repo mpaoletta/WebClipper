@@ -1,8 +1,10 @@
 package com.redbee.smm.twitter
 
 import java.util.Date
+import com.novus.salat.annotations._
 
-case class Tweet(id: Long, author: User, inReplyToUserId: Long, text: String, retweetCount: Long, createdAt: Date, hashtags: List[String]
+
+case class Tweet(@Key("_id") id: Long, author: User, inReplyToUserId: Long, text: String, retweetCount: Long, createdAt: Date, hashtags: List[String]
 , rate: Int, neg: Int, neu: Int, pos: Int, guides: List[String]) {
   
   def enrich(_rate: Int, _neg: Int, _neu: Int, _pos: Int, _guides: List[String]): Tweet = {
@@ -11,7 +13,7 @@ case class Tweet(id: Long, author: User, inReplyToUserId: Long, text: String, re
   
 }
 
-case class User(id: Long, screenName: String, statusesCount: Long, followersCount: Long
-    , favouritesCount: Long, friendsCount: Long, location: String, listedCount: Long
-    , description: String, timeZone: String, verified: Boolean, lang: String, name: String
-    , createdAt: Date)    
+case class User(@Key("_id") id: Long, screenName: String, statusesCount: Long, followersCount: Long
+    , favouritesCount: Long, friendsCount: Long, location: Option[String], listedCount: Long
+    , description: Option[String], timeZone: Option[String], verified: Boolean, lang: Option[String], name: String
+    , createdAt: Date, profileImageURL: Option[String])    

@@ -74,12 +74,35 @@ class TwitterStreamOwnerActor extends Actor with StatusListener {
   private def scheduleRestart: Unit = {
     Actor.registry.actorsFor("com.redbee.smm.twitter.TwitterEventScheduler").head ! new DelayedRestart( (System.currentTimeMillis - lastRestart) min 60000l)
   }
+
+//  private def ein(value: String): String = {
+//	  if(value == null)
+//	    ""
+//	  else
+//	    value
+//  }
+//  
+//  private def ein(value: Any): Any = {
+//    if(value == null) {
+//    	if(value.isInstanceOf[String])
+//    		""
+//    	else if(value.isInstanceOf[Long] || value.isInstanceOf[Int])
+//    		0
+//    	else null
+//    }
+//    else 
+//      value
+//  }
   
+  // FUCK, como funcionan los generics aca
+  private def ein(s: String): Option[String] = s match {case null => None;case _ => Some(s)}
+
   def onStatus(status: Status): Unit = {
 
     val u = status.getUser
-
-    val author = new User(u.getId, u.getScreenName, u.getStatusesCount, u.getFollowersCount, u.getFavouritesCount, u.getFriendsCount, u.getLocation, u.getListedCount, u.getDescription, u.getTimeZone, false, u.getLang, u.getName, u.getCreatedAt)
+    
+    val author = new User(u.getId, u.getScreenName, u.getStatusesCount, u.getFollowersCount, u.getFavouritesCount, u.getFriendsCount
+        ,ein(u.getLocation), u.getListedCount, ein(u.getDescription), ein(u.getTimeZone), false, ein(u.getLang), u.getName, u.getCreatedAt, ein(u.getProfileImageURL.toString))
 
     var hts = new ListBuffer[String]
     for (ht <- status.getHashtagEntities) {
